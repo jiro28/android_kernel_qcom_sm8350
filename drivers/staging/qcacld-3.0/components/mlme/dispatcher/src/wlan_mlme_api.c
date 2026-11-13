@@ -216,6 +216,22 @@ QDF_STATUS wlan_mlme_set_band_capability(struct wlan_objmgr_psoc *psoc,
 	return QDF_STATUS_SUCCESS;
 }
 
+QDF_STATUS wlan_mlme_set_dual_sta_policy(struct wlan_objmgr_psoc *psoc,
+					 uint8_t dual_sta_config)
+
+{
+	struct wlan_mlme_psoc_ext_obj *mlme_obj;
+
+	mlme_obj = mlme_get_psoc_ext_obj(psoc);
+	if (!mlme_obj)
+		return QDF_STATUS_E_FAILURE;
+
+	mlme_obj->cfg.gen.dual_sta_policy.concurrent_sta_policy =
+								dual_sta_config;
+
+	return QDF_STATUS_SUCCESS;
+}
+
 QDF_STATUS wlan_mlme_get_prevent_link_down(struct wlan_objmgr_psoc *psoc,
 					   bool *prevent_link_down)
 {
@@ -2445,6 +2461,18 @@ QDF_STATUS wlan_mlme_set_fils_enabled_info(struct wlan_objmgr_psoc *psoc,
 	return QDF_STATUS_SUCCESS;
 }
 
+QDF_STATUS wlan_mlme_set_primary_interface(struct wlan_objmgr_psoc *psoc,
+					   uint8_t value)
+{
+	struct wlan_mlme_psoc_ext_obj *mlme_obj = mlme_get_psoc_ext_obj(psoc);
+
+	if (!mlme_obj)
+		return QDF_STATUS_E_FAILURE;
+
+	mlme_obj->cfg.gen.dual_sta_policy.primary_vdev_id = value;
+	return QDF_STATUS_SUCCESS;
+}
+
 QDF_STATUS wlan_mlme_set_enable_bcast_probe_rsp(struct wlan_objmgr_psoc *psoc,
 						bool value)
 {
@@ -3793,14 +3821,16 @@ char *mlme_get_roam_status_str(uint32_t roam_status)
 char *mlme_get_roam_scan_type_str(uint32_t roam_scan_type)
 {
 	switch (roam_scan_type) {
-	case 0:
+	case ROAM_STATS_SCAN_TYPE_PARTIAL:
 		return "PARTIAL";
-	case 1:
+	case ROAM_STATS_SCAN_TYPE_FULL:
 		return "FULL";
-	case 2:
+	case ROAM_STATS_SCAN_TYPE_NO_SCAN:
 		return "NO SCAN";
-	case 3:
-		return "Higher Band";
+	case ROAM_STATS_SCAN_TYPE_HIGHER_BAND_5GHZ_6GHZ:
+		return "Higher Band: 5 GHz + 6 GHz";
+	case ROAM_STATS_SCAN_TYPE_HIGHER_BAND_6GHZ:
+		return "Higher Band : 6 GHz";
 	default:
 		return "UNKNOWN";
 	}
