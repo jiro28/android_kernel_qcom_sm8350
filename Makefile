@@ -1275,10 +1275,10 @@ asm-generic := -f $(srctree)/scripts/Makefile.asm-generic obj
 PHONY += asm-generic uapi-asm-generic
 asm-generic: uapi-asm-generic
 	$(Q)$(MAKE) $(asm-generic)=arch/$(SRCARCH)/include/generated/asm \
-	generic=include/asm-generic
+	generic=include/asm-generic SRCARCH=$(SRCARCH)
 uapi-asm-generic:
 	$(Q)$(MAKE) $(asm-generic)=arch/$(SRCARCH)/include/generated/uapi/asm \
-	generic=include/uapi/asm-generic
+	generic=include/uapi/asm-generic SRCARCH=$(SRCARCH)
 
 PHONY += prepare-objtool
 prepare-objtool: $(objtool_target)
