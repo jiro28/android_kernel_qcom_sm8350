@@ -271,6 +271,16 @@ QDF_STATUS wlan_mlme_set_band_capability(struct wlan_objmgr_psoc *psoc,
 					 uint32_t band_capability);
 
 /**
+ * wlan_mlme_set_dual_sta_policy() - Set the dual sta config
+ * @psoc: pointer to psoc object
+ * @dual_sta_config: Value to be set from the caller
+ *
+ * Return: QDF Status
+ */
+QDF_STATUS wlan_mlme_set_dual_sta_policy(struct wlan_objmgr_psoc *psoc,
+					 uint8_t dual_sta_config);
+
+/**
  * wlan_mlme_get_prevent_link_down() - Get the prevent link down config
  * @psoc: pointer to psoc object
  * @prevent_link_down: Pointer to the variable from caller
@@ -1027,6 +1037,20 @@ QDF_STATUS wlan_mlme_get_fils_enabled_info(struct wlan_objmgr_psoc *psoc,
  */
 QDF_STATUS wlan_mlme_set_fils_enabled_info(struct wlan_objmgr_psoc *psoc,
 					   bool value);
+
+/**
+ * wlan_mlme_set_primary_interface() - Set the primary iface id for driver
+ * @psoc: pointer to psoc object
+ * @value: value that needs to be set from the caller
+ *
+ * When a vdev is set as primary then based on the dual sta policy
+ * "qca_wlan_concurrent_sta_policy_config" mcc preference and roaming has
+ * to be enabled on the primary vdev
+ *
+ * Return: QDF Status
+ */
+QDF_STATUS wlan_mlme_set_primary_interface(struct wlan_objmgr_psoc *psoc,
+					   uint8_t value);
 
 /**
  * wlan_mlme_get_tl_delayed_trgr_frm_int() - Get delay interval(in ms)
@@ -2444,11 +2468,30 @@ wlan_mlme_get_ignore_fw_reg_offload_ind(struct wlan_objmgr_psoc *psoc,
 char *mlme_get_roam_trigger_str(uint32_t roam_scan_trigger);
 
 /**
- * mlme_get_roam_scan_type_str() - Get the string for roam sacn type
+ * enum roam_stats_scan_type  - Roam scan type defines
+ * @ROAM_STATS_SCAN_TYPE_PARTIAL: Partial scan
+ * @ROAM_STATS_SCAN_TYPE_FULL: Full scan
+ * @ROAM_STATS_SCAN_TYPE_NO_SCAN: No roam scan was triggered. This is generally
+ * used in BTM events to indicate BTM frame exchange logs.
+ * @ROAM_STATS_SCAN_TYPE_HIGHER_BAND_5GHZ_6GHZ: Higher band roam scan from 2 GHz
+ * to 5 GHz or 6 GHz
+ * @ROAM_STATS_SCAN_TYPE_HIGHER_BAND_6GHZ: Higher band roam scan from 5 GHz to
+ * 6 GHz
+ */
+enum roam_stats_scan_type {
+	ROAM_STATS_SCAN_TYPE_PARTIAL = 0,
+	ROAM_STATS_SCAN_TYPE_FULL = 1,
+	ROAM_STATS_SCAN_TYPE_NO_SCAN = 2,
+	ROAM_STATS_SCAN_TYPE_HIGHER_BAND_5GHZ_6GHZ = 3,
+	ROAM_STATS_SCAN_TYPE_HIGHER_BAND_6GHZ = 4,
+};
+
+/**
+ * mlme_get_roam_scan_type_str() - Get the string for roam scan type
  * @roam_scan_type: roam scan type coming from fw via
  * wmi_roam_scan_info tlv
  *
- *  Return: Meaningful string for roam sacn type
+ *  Return: Meaningful string for roam scan type
  */
 char *mlme_get_roam_scan_type_str(uint32_t roam_scan_type);
 
