@@ -2041,15 +2041,15 @@ static void sm5714_muic_debug_reg_log(struct work_struct *work)
 	data[16] = sm5714_i2c_read_byte(i2c, SM5714_MUIC_REG_AFC_STATE);
 	data[17] = sm5714_i2c_read_byte(i2c, SM5714_MUIC_REG_OTP_IF_STS);
 
-	pr_info("[%s:%s]IM[0x%02x 0x%02x] CNTL:0x%02x MAN_SW:0x%02x DEV_TYPE[0x%02x 0x%02x] attached_dev:%d\n",
+	pr_debug("[%s:%s]IM[0x%02x 0x%02x] CNTL:0x%02x MAN_SW:0x%02x DEV_TYPE[0x%02x 0x%02x] attached_dev:%d\n",
 			MUIC_DEV_NAME, __func__, data[0], data[1], data[2],
 			data[3], data[4], data[5], muic_data->attached_dev);
 
-	pr_info("[%s:%s]AFC_CNTL:0x%02x AFC_TXD:0x%02x AFC_STATUS:0x%02x VBUS_VOL:%d AFC_STA:0x%02x",
+	pr_debug("[%s:%s]AFC_CNTL:0x%02x AFC_TXD:0x%02x AFC_STATUS:0x%02x VBUS_VOL:%d AFC_STA:0x%02x",
 			MUIC_DEV_NAME, __func__, data[6], data[7],
 			data[8], data[9], data[10]);
 
-	pr_info("[%s:%s]CFG1:0x%02x CFG2:0x%02x USBKS:0x%02x VBUS:0x%02x BCD_STATE:0x%02x AFC_STATE:0x%02x OTP_IF_STS:0x%02x\n",
+	pr_debug("[%s:%s]CFG1:0x%02x CFG2:0x%02x USBKS:0x%02x VBUS:0x%02x BCD_STATE:0x%02x AFC_STATE:0x%02x OTP_IF_STS:0x%02x\n",
 			MUIC_DEV_NAME, __func__, data[11], data[12], data[13],
 			data[14], data[15], data[16], data[17]);
 

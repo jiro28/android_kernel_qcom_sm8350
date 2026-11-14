@@ -408,11 +408,11 @@ static void chg_print_regmap(struct sm5714_charger_data *charger)
 	for (i = 0; i < PRINT_CHG_REG_NUM; ++i) {
 		sprintf(temp_buf+strlen(temp_buf), "0x%02X[0x%02X],", SM5714_CHG_REG_INTMSK1 + i, regs[i]);
 		if (i % 11 == 10) {
-			pr_info("sm5714-charger: regmap: %s\n", temp_buf);
+			pr_debug("sm5714-charger: regmap: %s\n", temp_buf);
 			memset(temp_buf, 0x0, sizeof(temp_buf));
 		}
 	}
-	pr_info("sm5714-charger: regmap: %s\n", temp_buf);
+	pr_debug("sm5714-charger: regmap: %s\n", temp_buf);
 	memset(temp_buf, 0x0, sizeof(temp_buf));
 
 	// SINKADJ & FLED
@@ -420,11 +420,11 @@ static void chg_print_regmap(struct sm5714_charger_data *charger)
 	for (i = 0; i < PRINT_CHG_REG2_NUM; ++i) {
 		sprintf(temp_buf+strlen(temp_buf), "0x%02X[0x%02X],", SM5714_CHG_REG_SINKADJ + i, reg2s[i]);
 		if (i % 9 == 8) {
-			pr_info("sm5714-charger: regmap: %s\n", temp_buf);
+			pr_debug("sm5714-charger: regmap: %s\n", temp_buf);
 			memset(temp_buf, 0x0, sizeof(temp_buf));
 		}
 	}
-	pr_info("sm5714-charger: regmap: %s\n", temp_buf);
+	pr_debug("sm5714-charger: regmap: %s\n", temp_buf);
 
 }
 
@@ -630,7 +630,7 @@ static int sm5714_chg_get_property(struct power_supply *psy,
 		power_supply_get_drvdata(psy);
 	enum power_supply_ext_property ext_psp = (enum power_supply_ext_property) psp;
 
-	dev_info(charger->dev, "%s: psp=%d\n", __func__, psp);
+	dev_dbg(charger->dev, "%s: psp=%d\n", __func__, psp);
 
 	switch ((int)psp) {
 	case POWER_SUPPLY_PROP_ONLINE:
@@ -828,7 +828,7 @@ static int sm5714_chg_set_property(struct power_supply *psy,
 		power_supply_get_drvdata(psy);
 	enum power_supply_ext_property ext_psp = (enum power_supply_ext_property) psp;
 
-	dev_info(charger->dev, "%s: psp=%d\n", __func__, psp);
+	dev_dbg(charger->dev, "%s: psp=%d\n", __func__, psp);
 
 	switch ((int)psp) {
 	case POWER_SUPPLY_PROP_STATUS:

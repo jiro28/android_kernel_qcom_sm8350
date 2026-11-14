@@ -207,7 +207,7 @@ static void sm5714_dump_all(struct sm5714_fuelgauge_data* fuelgauge) {
 			val = sm5714_fg_read_sram(fuelgauge, sm5714_srams[i]);
 			sprintf(temp_buf+strlen(temp_buf), "%02x:%04x,", sm5714_srams[i], val);
 		}
-		pr_info("[sm5714_fg_all_srams_1] %s\n", temp_buf);
+		pr_debug("[sm5714_fg_all_srams_1] %s\n", temp_buf);
 		memset(temp_buf, 0x0, sizeof(temp_buf));
 		sm5714_fg_debug_print++;
 		break;
@@ -217,7 +217,7 @@ static void sm5714_dump_all(struct sm5714_fuelgauge_data* fuelgauge) {
 			val = sm5714_fg_read_sram(fuelgauge, sm5714_srams[i]);
 			sprintf(temp_buf+strlen(temp_buf), "%02x:%04x,", sm5714_srams[i], val);
 		}
-		pr_info("[sm5714_fg_all_srams_2] %s\n", temp_buf);
+		pr_debug("[sm5714_fg_all_srams_2] %s\n", temp_buf);
 		memset(temp_buf, 0x0, sizeof(temp_buf));
 		sm5714_fg_debug_print++;
 		break;
@@ -227,7 +227,7 @@ static void sm5714_dump_all(struct sm5714_fuelgauge_data* fuelgauge) {
 			val = sm5714_fg_read_sram(fuelgauge, sm5714_srams[i]);
 			sprintf(temp_buf+strlen(temp_buf), "%02x:%04x,", sm5714_srams[i], val);
 		}
-		pr_info("[sm5714_fg_all_srams_3] %s\n", temp_buf);
+		pr_debug("[sm5714_fg_all_srams_3] %s\n", temp_buf);
 		memset(temp_buf, 0x0, sizeof(temp_buf));
 		sm5714_fg_debug_print++;
 		break;
@@ -237,7 +237,7 @@ static void sm5714_dump_all(struct sm5714_fuelgauge_data* fuelgauge) {
 			val = sm5714_fg_read_sram(fuelgauge, sm5714_srams[i]);
 			sprintf(temp_buf+strlen(temp_buf), "%02x:%04x,", sm5714_srams[i], val);
 		}
-		pr_info("[sm5714_fg_all_srams_4] %s\n", temp_buf);
+		pr_debug("[sm5714_fg_all_srams_4] %s\n", temp_buf);
 		memset(temp_buf, 0x0, sizeof(temp_buf));
 		sm5714_fg_debug_print=0;
 		break;
@@ -318,7 +318,7 @@ static bool sm5714_fg_check_reg_init_need(struct sm5714_fuelgauge_data *fuelgaug
 	ret = sm5714_read_word(fuelgauge->i2c, SM5714_FG_REG_SYSTEM_STATUS);
 
 	if ((ret & INIT_CHECK_MASK) == DISABLE_RE_INIT) {
-		pr_info("%s: SM5714_REG_FG_SYSTEM_STATUS : 0x%x , return FALSE NO init need\n", __func__, ret);
+		pr_debug("%s: SM5714_REG_FG_SYSTEM_STATUS : 0x%x , return FALSE NO init need\n", __func__, ret);
 		return 0;
 	} else {
 		pr_info("%s: SM5714_REG_FG_SYSTEM_STATUS : 0x%x , return TRUE init need!!!!\n", __func__, ret);
@@ -565,7 +565,7 @@ static void sm5714_vbatocv_check(struct sm5714_fuelgauge_data *fuelgauge)
 					sm5714_fg_write_sram(fuelgauge, SM5714_FG_ADDR_SRAM_RS_MAX, (fuelgauge->info.rs_value[0]<<1)+5);
 				}
 			} else {
-				pr_info("%s: mode change to mix RS auto mode\n", __func__);
+				pr_debug("%s: mode change to mix RS auto mode\n", __func__);
 				sm5714_fg_write_sram(fuelgauge, SM5714_FG_ADDR_SRAM_RS_MAX, 0x3800);
 			}
 		} else { /* voltage mode with 3.25V, VEMPTY_MODE_HW mode */
@@ -583,7 +583,7 @@ static void sm5714_vbatocv_check(struct sm5714_fuelgauge_data *fuelgauge)
 					sm5714_fg_write_sram(fuelgauge, SM5714_FG_ADDR_SRAM_RS_MAX, (fuelgauge->info.rs_value[0]<<1)+5);
 				}
 			} else {
-				pr_info("%s: mode change to mix RS auto mode\n", __func__);
+				pr_debug("%s: mode change to mix RS auto mode\n", __func__);
 				sm5714_fg_write_sram(fuelgauge, SM5714_FG_ADDR_SRAM_RS_MAX, 0x3800);
 			}
 		}
@@ -1836,7 +1836,7 @@ static int sm5714_fg_get_property(struct power_supply *psy,
 	union power_supply_propval value;
 */
 
-	pr_info("%s: psp = 0x%x\n", __func__, psp);
+	pr_debug("%s: psp = 0x%x\n", __func__, psp);
 	switch ((int)psp) {
 	/* Cell voltage (VCELL, mV) */
 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
@@ -2014,7 +2014,7 @@ static int sm5714_fg_get_property(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_CHARGE_COUNTER:
 		val->intval =
 			fuelgauge->battery_data->Capacity * fuelgauge->raw_capacity;
-		pr_info("%s: charge_counter = %d \n", __func__, val->intval);
+		pr_debug("%s: charge_counter = %d \n", __func__, val->intval);
 		break;
 #if defined(CONFIG_BATTERY_AGE_FORECAST)
 	case POWER_SUPPLY_PROP_CAPACITY_LEVEL:

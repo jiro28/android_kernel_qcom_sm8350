@@ -3767,7 +3767,7 @@ static void sm5714_usbpd_debug_reg_log(struct work_struct *work)
 	sm5714_usbpd_read_reg(i2c, SM5714_REG_COMP_CNTL, &data[18]);
 	sm5714_usbpd_read_reg(i2c, SM5714_REG_CLK_CNTL, &data[19]);
 
-	pr_info("%s JIGON:0x%02x CR_CT[1: 0x%02x 4:0x%02x 5:0x%02x] CC_ST:0x%02x CC_CT[1:0x%02x 2:0x%02x 3:0x%02x 7:0x%02x] PD_CT[1:0x%02x 4:0x%02x] RX_BUF_ST:0x%02x PROBE0:0x%02x PD_ST[0:0x%02x 2:0x%02x 3:0x%02x 4:0x%02x 5:0x%02x]COMP:0x%02x CLK:0x%02x\n",
+	pr_debug("%s JIGON:0x%02x CR_CT[1: 0x%02x 4:0x%02x 5:0x%02x] CC_ST:0x%02x CC_CT[1:0x%02x 2:0x%02x 3:0x%02x 7:0x%02x] PD_CT[1:0x%02x 4:0x%02x] RX_BUF_ST:0x%02x PROBE0:0x%02x PD_ST[0:0x%02x 2:0x%02x 3:0x%02x 4:0x%02x 5:0x%02x]COMP:0x%02x CLK:0x%02x\n",
 			__func__, data[0], data[1], data[2], data[3], data[4],
 			data[5], data[6], data[7], data[8], data[9], data[10],
 			data[11], data[12], data[13], data[14], data[15],
