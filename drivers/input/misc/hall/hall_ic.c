@@ -124,7 +124,7 @@ static ssize_t hall_detect_show(struct device *dev,
 	int state;
 
 	list_for_each_entry(hall, &hall_ic_list, list) {
-		if (hall->event != SW_LID)
+		if (hall->event != SW_LID && hall->event != SW_FLIP)
 			continue;
 		hall->state = !!gpio_get_value_cansleep(hall->gpio);
 		state = hall->state ^ hall->active_low;
@@ -640,6 +640,8 @@ static struct hall_ic_pdata *hall_ic_parsing_dt(struct device *dev)
 			pr_err("failed to get event: 0x%x\n", hall->event);
 			return ERR_PTR(-EINVAL);
 		}
+		if (hall->event == SW_FLIP)
+			hall->event = SW_LID;
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0))
 		if (hall->event == 0x15) { /* SW_FLIP */
 			hall->event = 0x10;
