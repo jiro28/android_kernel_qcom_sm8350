@@ -1296,7 +1296,7 @@ int sec_usb_conn_check(struct sec_battery_info *battery)
 			}
 		}
 	} else {
-		pr_err("%s: USB_THM, Invalid Temp Check Type, usb_thm <- bat_thm\n", __func__);
+		pr_err_once("%s: USB_THM, Invalid Temp Check Type, usb_thm <- bat_thm\n", __func__);
 		// there is no USB_THM, mass models, THM1 = BAT_THM, THM2 = CHG_THM
 		cur_bat_temp = sec_bat_get_temperature(battery->dev, &battery->pdata->bat_thm_info, cur_bat_temp,
 			battery->pdata->charger_name, battery->pdata->fuelgauge_name, battery->pdata->adc_read_type);
@@ -1395,7 +1395,7 @@ void sec_usb_thm_overheatlimit(struct sec_battery_info *battery)
 	int usb_temp = battery->usb_temp;
 
 	if (!use_usb_temp) {
-		pr_err("%s: USB_THM, Invalid Temp Check Type, usb_thm <- bat_thm\n", __func__);
+		pr_err_once("%s: USB_THM, Invalid Temp Check Type, usb_thm <- bat_thm\n", __func__);
 		battery->usb_temp = battery->temperature;
 		usb_temp = battery->temperature;
 	}
