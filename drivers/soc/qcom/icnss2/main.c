@@ -3752,6 +3752,18 @@ static void sec_remove_wifi_sysfs(struct icnss_priv *plat_priv)
 }
 #endif /* CONFIG_SEC_SS_CNSS_FEATURE_SYSFS */
 
+struct kobject *icnss_get_wifi_kobj(void)
+{
+#ifdef CONFIG_SEC_SS_CNSS_FEATURE_SYSFS
+	if (!penv)
+		return NULL;
+	return penv->wifi_kobj;
+#else
+	return NULL;
+#endif
+}
+EXPORT_SYMBOL(icnss_get_wifi_kobj);
+
 static struct attribute *icnss_attrs[] = {
 	&dev_attr_qdss_tr_start.attr,
 	&dev_attr_qdss_tr_stop.attr,

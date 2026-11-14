@@ -204,5 +204,6 @@ extern unsigned long icnss_get_device_config(void);
 //#ifdef SEC_SS_CNSS_FEATURE_SYSFS
 extern int cnss_sysfs_get_pm_info(void);
 extern void cnss_sysfs_update_driver_status(int32_t new_status, void *version, void *softap);
+extern struct kobject *icnss_get_wifi_kobj(void);
 //#endif /* SEC_SS_CNSS_FEATURE_SYSFS */
 #endif /* _ICNSS_WLAN_H_ */

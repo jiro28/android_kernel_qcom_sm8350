@@ -564,8 +564,19 @@ static void hdd_sysfs_destroy_version_interface(void)
 	}
 }
 
+#if defined(CONFIG_SEC_SS_CNSS_FEATURE_SYSFS) || defined(CONFIG_ICNSS2)
+extern struct kobject *icnss_get_wifi_kobj(void);
+#endif
+
 static void hdd_sysfs_create_wifi_root_obj(void)
 {
+#if defined(CONFIG_SEC_SS_CNSS_FEATURE_SYSFS) || defined(CONFIG_ICNSS2)
+	wifi_kobject = icnss_get_wifi_kobj();
+	if (wifi_kobject) {
+		kobject_get(wifi_kobject);
+		return;
+	}
+#endif
 	wifi_kobject = kobject_create_and_add("wifi", NULL);
 	if (!wifi_kobject)
 		hdd_err("could not allocate wifi kobject");
